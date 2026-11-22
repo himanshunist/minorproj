@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment / secrets
+.env
+.env.*
+!**/.env.example
+!**/.env.production.example
+
+# Dataset and notebook intermediates (never commit large data)
+*.csv.gz
+*.gz
+clean_dataset.pkl
+gnb_dataset.pkl
+dt_dataset.pkl
+xgb_dataset.pkl
+backend/data/*
+!backend/data/.gitkeep
+
+# Node
+node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Deliverable archive (generated on request)
+package.zip
+
+# Keep generated model artifacts tracked (explicitly not ignored)
+!backend/models/*.joblib
+!backend/models/*.npz
+!backend/models/*.json
