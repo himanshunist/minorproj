@@ -5,8 +5,11 @@ machine-learning approach in [JayantUppal/Intrusion-Detection-System](https://gi
 The original **Gaussian Naive Bayes + Decision Tree + XGBoost max-voting** approach is reused; no
 replacement or dummy model was introduced.
 
-> **Deployment status:** not deployed. This repository contains deployment configuration and exact
-> instructions. Do not claim a live URL until both platforms have been connected and verified.
+> **Deployment status:** live and verified on 22 Nov 2026.
+>
+> - Frontend: https://sentinel-ids-frontend.vercel.app
+> - Backend: https://sentinel-ids-backend-4say.onrender.com
+> - GitHub: https://github.com/himanshunist/minorproj
 
 ---
 
@@ -372,17 +375,27 @@ Free Render instances sleep when idle; the first request after inactivity can ta
 
 `VITE_*` variables are compiled into the browser bundle. They must never contain secrets.
 
-### 6.3 Live health-check procedure
+### 6.3 Verified live deployment and health check
+
+The current deployment was verified on 22 Nov 2026:
+
+| Service | URL | Result |
+| --- | --- | --- |
+| Frontend (Vercel) | https://sentinel-ids-frontend.vercel.app | Production build served; all routes render; green **Model online** chip |
+| Backend (Render) | https://sentinel-ids-backend-4say.onrender.com | `GET /health` → 200, `model_ready: true`; `GET /model-info` → 200 |
+| Prediction from deployed UI | `POST /predict` | 200 with a real 3-model vote result; no browser console errors |
+
+Health-check commands for this deployment:
 
 ```powershell
-curl https://<your-render-service>.onrender.com/health
-curl https://<your-render-service>.onrender.com/model-info
+curl https://sentinel-ids-backend-4say.onrender.com/health
+curl https://sentinel-ids-backend-4say.onrender.com/model-info
 ```
 
-Expected: HTTP 200, `"model_ready": true`, and a non-null `version`. Then open the Vercel URL, check
-the green **Model online** chip, run the HTTP example in Intrusion Detection, upload
-`sample_records.csv`, and confirm a CSV download works. Finally check the browser console for CORS
-errors.
+Expected: HTTP 200, `"model_ready": true`, and a non-null `version`. The Render free instance sleeps
+when idle, so the first request can take 50 seconds or more. Open the Vercel URL, check the green
+**Model online** chip, and run an example in Intrusion Detection. `ALLOWED_ORIGINS` on Render is set
+to the exact deployed Vercel origin, so browser calls are restricted to that frontend.
 
 ---
 
